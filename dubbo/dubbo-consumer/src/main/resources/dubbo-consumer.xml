@@ -1,0 +1,45 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
+       <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"-->
+       <!--xsi:schemaLocation="http://www.springframework.org/schema/beans-->
+    <!--http://www.springframework.org/schema/beans/spring-beans.xsd-->
+    <!--http://code.alibabatech.com/schema/dubbo-->
+    <!--http://code.alibabatech.com/schema/dubbo/dubbo.xsd">-->
+
+    <!--&lt;!&ndash; 提供方应用信息，用于计算依赖关系 &ndash;&gt;-->
+    <!--<dubbo:application name="dubbo-consumer"/>-->
+
+    <!--&lt;!&ndash; 使用multicast广播注册中心暴露服务地址 &ndash;&gt;-->
+    <!--&lt;!&ndash; <dubbo:registry address="multicast://224.5.6.7:1234" /> &ndash;&gt;-->
+
+    <!--&lt;!&ndash; 使用zookeeper注册中心暴露服务地址 &ndash;&gt;-->
+    <!--<dubbo:registry address="zookeeper://192.168.227.78:2181"/>-->
+
+    <!--&lt;!&ndash; 声明需要暴露的服务接口 &ndash;&gt;-->
+    <!--<dubbo:reference id="demoService" interface="com.example.dubbo.services.IDemoService"/>-->
+
+<!--</beans>-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	   http://code.alibabatech.com/schema/dubbo
+	   http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="consumer"/>
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry protocol="zookeeper" address="zookeeper://192.168.227.78:2181"/>
+
+    <!-- 用户服务接口 -->
+    <!-- retries表示失败后的重试次数，timeout表示超时时间，actives表示客户端并发限制数 服务端并发控制可用executes参数 -->
+    <dubbo:reference id="userService" interface="com.example.dubbo.services.IDemoService">
+        <dubbo:method name="sayHello"  retries="2" timeout="5000" ></dubbo:method>
+        <!--<dubbo:method name="getUserByName"   actives="10" ></dubbo:method>-->
+    </dubbo:reference>
+
+
+</beans>
