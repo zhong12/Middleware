@@ -46,6 +46,8 @@
     <dubbo:service interface="com.example.dubbo.services.IDemoService"
                    ref="demoService" protocol="dubbo" executes="10" register="true" registry="remote_registry"/>
     <dubbo:service interface="com.example.dubbo.services.IHelloService" registry="remote_registry"
+                   ref="helloService" protocol="dubbo" executes="10" version="1.0.0"/>
+    <dubbo:service interface="com.example.dubbo.services.IHelloService" registry="remote_registry"
                    ref="helloService" protocol="dubbo" executes="10" version="1.0.1"/>
 
     <!-- 和本地bean一样实现服务 -->
