@@ -1,25 +1,3 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
-<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
-       <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"-->
-       <!--xsi:schemaLocation="http://www.springframework.org/schema/beans-->
-    <!--http://www.springframework.org/schema/beans/spring-beans.xsd-->
-    <!--http://code.alibabatech.com/schema/dubbo-->
-    <!--http://code.alibabatech.com/schema/dubbo/dubbo.xsd">-->
-
-    <!--&lt;!&ndash; 提供方应用信息，用于计算依赖关系 &ndash;&gt;-->
-    <!--<dubbo:application name="dubbo-consumer"/>-->
-
-    <!--&lt;!&ndash; 使用multicast广播注册中心暴露服务地址 &ndash;&gt;-->
-    <!--&lt;!&ndash; <dubbo:registry address="multicast://224.5.6.7:1234" /> &ndash;&gt;-->
-
-    <!--&lt;!&ndash; 使用zookeeper注册中心暴露服务地址 &ndash;&gt;-->
-    <!--<dubbo:registry address="zookeeper://192.168.227.78:2181"/>-->
-
-    <!--&lt;!&ndash; 声明需要暴露的服务接口 &ndash;&gt;-->
-    <!--<dubbo:reference id="demoService" interface="com.example.dubbo.services.IDemoService"/>-->
-
-<!--</beans>-->
-
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
@@ -32,13 +10,25 @@
     <dubbo:application name="consumer"/>
 
     <!-- 使用zookeeper注册中心暴露服务地址 -->
-    <dubbo:registry protocol="zookeeper" address="zookeeper://192.168.227.78:2181"/>
+    <dubbo:registry id="local" protocol="zookeeper" address="zookeeper://192.168.227.78:2181"/>
+    <dubbo:registry id="remote" protocol="zookeeper" address="zookeeper://192.168.227.78:2181"/>
+
 
     <!-- 用户服务接口 -->
-    <!-- retries表示失败后的重试次数，timeout表示超时时间，actives表示客户端并发限制数 服务端并发控制可用executes参数 -->
-    <dubbo:reference id="userService" interface="com.example.dubbo.services.IDemoService">
-        <dubbo:method name="sayHello"  retries="2" timeout="5000" ></dubbo:method>
-        <!--<dubbo:method name="getUserByName"   actives="10" ></dubbo:method>-->
+    <!--说明：-->
+    <!--dubbo:reference 的一些属性的说明：-->
+    <!--1）interface调用的服务接口-->
+    <!--2）check 启动时检查提供者是否存在，true报错，false忽略-->
+    <!--3）registry 从指定注册中心注册获取服务列表，在多个注册中心时使用，值为<dubbo:registry>的id属性，多个注册中心ID用逗号分隔-->
+    <!--4）loadbalance 负载均衡策略，可选值：random,roundrobin,leastactive，分别表示：随机，轮循，最少活跃调用-->
+    <!--5）retries表示失败后的重试次数，timeout表示超时时间，actives表示客户端并发限制数 服务端并发控制可用executes参数-->
+    <dubbo:reference id="demoService" interface="com.example.dubbo.services.IDemoService" check="false" registry="local,remote" loadbalance="random">
+        <dubbo:method name="sayHello" retries="2" timeout="5000"></dubbo:method>
+    </dubbo:reference>
+
+    <dubbo:reference id="helloService" interface="com.example.dubbo.services.IHelloService" version="1.0.0">
+        <dubbo:method name="sayHello" retries="2" timeout="5000"></dubbo:method>
+        <dubbo:method name="sayHello" actives="10"></dubbo:method>
     </dubbo:reference>
 
 

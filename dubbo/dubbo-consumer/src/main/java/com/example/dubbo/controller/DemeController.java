@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by zhongjing on 2017/03/21.
  */
 @RestController
-@RequestMapping(value = "/test")
+@RequestMapping(value = "/demo")
 public class DemeController {
     @Autowired
     private IDemoService demoService;

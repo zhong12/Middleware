@@ -9,19 +9,51 @@
     <!-- 提供方应用信息，用于计算依赖关系 -->
     <dubbo:application name="dubbo-provider" />
 
+    <!--注册-->
+    <!--说明：-->
+    <!--dubbo:registry 标签一些属性的说明：-->
+    <!--1）register是否向此注册中心注册服务，如果设为false，将只订阅，不注册。-->
+    <!--2）check注册中心不存在时，是否报错。-->
+    <!--3）subscribe是否向此注册中心订阅服务，如果设为false，将只注册，不订阅。-->
+    <!--4）timeout注册中心请求超时时间(毫秒)。-->
+    <!--5）address可以Zookeeper集群配置，地址可以多个以逗号隔开等。-->
+    <!-- 多注册中心配置，竖号分隔表示同时连接多个不同注册中心，同一注册中心的多个集群地址用逗号分隔 -->
+    <!--由于只用了一台机器，所以就用一台机器代替-->
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <!--<dubbo:registry id="local_registry" address="zookeeper://192.168.227.78:2181|192.168.227.78:2181" check="false" subscribe="false" register=""/>-->
+    <dubbo:registry id="remote_registry" address="zookeeper://192.168.227.78:2181" check="false" subscribe="false" register=""/>
+
     <!-- 使用multicast广播注册中心暴露服务地址 -->
     <!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
 
-    <!-- 使用zookeeper注册中心暴露服务地址 -->
-    <dubbo:registry address="zookeeper://192.168.227.78:2181" />
-
+    <!-- 多协议配置 -->
     <!-- 用dubbo协议在20880端口暴露服务 -->
     <dubbo:protocol name="dubbo" port="20880" />
+    <!-- 使用rmi协议暴露服务 -->
+    <dubbo:protocol name="rmi" port="1099" />
 
-    <!-- 声明需要暴露的服务接口 -->
+    <!-- 声明需要暴露的服务接口-->
+    <!--说明：-->
+    <!--dubbo:service标签的一些属性说明：-->
+    <!--1）interface服务接口的路径-->
+    <!--2）ref引用对应的实现类的Bean的ID-->
+    <!--3）registry向指定注册中心注册，在多个注册中心时使用，值为<dubbo:registry>的id属性，多个注册中心ID用逗号分隔，如果不想将该服务注册到任何registry，可将值设为N/A-->
+    <!--4）register 默认true ，该协议的服务是否注册到注册中心。-->
+    <!--5）executes服务端并发数。-->
+    <!--<dubbo:service interface="com.example.dubbo.services.IDemoService"-->
+                   <!--ref="demoService" protocol="rmi" executes="10" register="true" registry="local_registry,remote_registry"/>-->
+
     <dubbo:service interface="com.example.dubbo.services.IDemoService"
-                   ref="demoService" />
+                   ref="demoService" protocol="dubbo" executes="10" register="true" registry="remote_registry"/>
+    <dubbo:service interface="com.example.dubbo.services.IHelloService" registry="remote_registry"
+                   ref="helloService" protocol="dubbo" executes="10" version="1.0.1"/>
 
     <!-- 和本地bean一样实现服务 -->
-    <bean id="demoService" class="com.example.dubbo.services.DemoServiceImpl" />
+    <bean id="demoService" class="com.example.dubbo.services.DemoServiceImpl">
+
+    </bean>
+    <bean id="helloService" class="com.example.dubbo.services.HelloServiceImpl">
+        <!--<dubbo:method name="sayHello"></dubbo:method>-->
+        <!--<dubbo:method name="show"></dubbo:method>-->
+    </bean>
 </beans>
