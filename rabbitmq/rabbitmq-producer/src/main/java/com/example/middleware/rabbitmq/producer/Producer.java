@@ -1,6 +1,6 @@
-package com.example.rabbitmq.producer;
+package com.example.middleware.rabbitmq.producer;
 
-import org.apache.commons.lang.SerializationUtils;
+import org.springframework.util.SerializationUtils;
 
 import java.io.IOException;
 import java.io.Serializable;

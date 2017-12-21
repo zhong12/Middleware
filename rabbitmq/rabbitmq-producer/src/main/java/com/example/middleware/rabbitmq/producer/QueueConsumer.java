@@ -1,8 +1,7 @@
-package com.example.rabbitmq.consumer;
+package com.example.middleware.rabbitmq.producer;
 
-import com.example.rabbitmq.producer.EndPoint;
 import com.rabbitmq.client.*;
-import org.apache.commons.lang.SerializationUtils;
+import org.springframework.util.SerializationUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,6 +16,7 @@ public class QueueConsumer extends EndPoint implements Runnable, Consumer {
         super(endPointName);
     }
 
+    @Override
     public void run() {
         try {
             //start consuming messages. Auto acknowledge messages.
@@ -29,6 +29,7 @@ public class QueueConsumer extends EndPoint implements Runnable, Consumer {
     /**
      * Called when consumer is registered.
      */
+    @Override
     public void handleConsumeOk(String consumerTag) {
         System.out.println("Consumer "+consumerTag +" registered");
     }
@@ -42,15 +43,21 @@ public class QueueConsumer extends EndPoint implements Runnable, Consumer {
         System.out.println("Message Number "+ map.get("message number") + " received.");
 
     }
-
+    
+    @Override
     public void handleCancel(String consumerTag) {}
+
+    @Override
     public void handleCancelOk(String consumerTag) {}
+
+    @Override
     public void handleRecoverOk(String consumerTag) {}
 
     @Override
     public void handleDelivery(String s, Envelope envelope, AMQP.BasicProperties basicProperties, byte[] bytes) throws IOException {
 
     }
-
+    
+    @Override
     public void handleShutdownSignal(String consumerTag, ShutdownSignalException arg1) {}
 }

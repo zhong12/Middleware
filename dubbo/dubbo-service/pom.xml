@@ -34,6 +34,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.zb.cloud</groupId>
+			<artifactId>zb-logcenter-sdk</artifactId>
+			<version>1.0.5-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -27,7 +27,7 @@
     </dubbo:reference>
 
     <dubbo:reference id="helloService" interface="com.example.dubbo.services.IHelloService" version="1.0.0">
-        <dubbo:method name="sayHello" retries="2" timeout="5000"></dubbo:method>
+        <dubbo:method name="sayHello" retries="2" timeout="50000"></dubbo:method>
         <dubbo:method name="sayHello" actives="10"></dubbo:method>
     </dubbo:reference>
 

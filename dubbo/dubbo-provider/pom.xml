@@ -63,6 +63,13 @@
 			<artifactId>zkclient</artifactId>
 			<version>0.1</version>
 		</dependency>
+
+
+		<dependency>
+			<groupId>com.zb.cloud</groupId>
+			<artifactId>zb-logcenter-sdk</artifactId>
+			<version>1.0.3-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
