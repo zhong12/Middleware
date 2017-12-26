@@ -14,7 +14,6 @@
 	<modules>
 		<module>dubbo</module>
 		<module>rocketmq</module>
-		<module>rabbitmq</module>
 	</modules>
 
 	<parent>
