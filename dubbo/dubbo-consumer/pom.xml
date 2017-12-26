@@ -12,9 +12,9 @@
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.0.RELEASE</version>
+		<groupId>com.example.middleware.dubbo</groupId>
+		<artifactId>dubbo</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<properties>
@@ -38,7 +38,6 @@
 		<dependency>
 			<groupId>com.example.middleware.dubbo</groupId>
 			<artifactId>dubbo-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -58,13 +57,6 @@
 			<artifactId>zkclient</artifactId>
 			<version>0.1</version>
 		</dependency>
-
-		<dependency>
-			<groupId>com.zb.cloud</groupId>
-			<artifactId>zb-logcenter-sdk</artifactId>
-			<version>1.0.5-SNAPSHOT</version>
-		</dependency>
-		
 	</dependencies>
 
 	<build>
