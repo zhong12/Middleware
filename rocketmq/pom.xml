@@ -6,7 +6,7 @@
 	<groupId>com.example.middleware.rocketmq</groupId>
 	<artifactId>rocketmq</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<name>rocketmq</name>
 	<description>rocketmq project for Spring Boot</description>
